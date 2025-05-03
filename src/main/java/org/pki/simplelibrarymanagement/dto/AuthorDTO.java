@@ -10,5 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AuthorDTO {
-    private
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
 }
