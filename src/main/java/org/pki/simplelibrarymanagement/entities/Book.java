@@ -1,10 +1,6 @@
 package org.pki.simplelibrarymanagement.entities;
 
-import com.lib.demo.enums.Genre;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -13,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
+import org.pki.simplelibrarymanagement.enums.Genre;
 
 import java.util.List;
 import java.util.Set;
@@ -32,10 +29,16 @@ public class Book extends BaseEntity {
     @ColumnDefault("0")
     private String isbn;
 
+    @ElementCollection(targetClass = Genre.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<Genre> genre;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
     private Set<Author> author;
 
     private boolean isBorrowed;

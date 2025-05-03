@@ -1,6 +1,7 @@
 package org.pki.simplelibrarymanagement.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -35,7 +36,7 @@ public class Author extends BaseEntity {
     @NotNull(message = "email cant be null")
     private String email;
 
-    @OneToMany
+    @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
 
 }
