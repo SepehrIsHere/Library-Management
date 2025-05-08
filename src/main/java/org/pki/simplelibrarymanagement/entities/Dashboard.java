@@ -37,4 +37,5 @@ public class Dashboard extends BaseEntity {
     @NotNull(message = "Dashboard status cant be null")
     @ColumnDefault("DashboardStatus.DEACTIVATED")
     private DashboardStatus status;
+
 }
