@@ -1,12 +1,12 @@
 package org.pki.simplelibrarymanagement.repository;
 
 import org.pki.simplelibrarymanagement.entities.Dashboard;
-import org.pki.simplelibrarymanagement.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,7 +18,15 @@ public interface DashboardRepository extends JpaRepository<Dashboard, Long> {
     Optional<Dashboard> findByDashboardName(@Param("dashBoardName") String dashBoardName);
 
     @Query("SELECT d FROM Dashboard d WHERE d.user.id = :id")
-    Optional<User> findByUser(@Param("id") Long userId);
+    Optional<Dashboard> findByUser(@Param("id") Long userId);
 
+    @Query("SELECT d FROM Dashboard d WHERE d.status = :Deactivated")
+    Optional<List<Dashboard>> findDeactivatedDashboards();
+
+    @Query("SELECT d FROM Dashboard d WHERE d.status = :Suspended")
+    Optional<List<Dashboard>> findSuspendedDashboards();
+
+    @Query("SELECT d FROM Dashboard d WHERE d.status = :Active")
+    Optional<List<Dashboard>> findActiveDashboards();
 
 }
